@@ -4,7 +4,7 @@ import pvporcupine
 import pyaudio
 import speech_recognition as sr
 
-from jarvis.utils import server_utils
+from jarvis.utils import server_utils, config_utils
 
 wake_word_handler = pvporcupine.create(keywords=['jarvis'])
 
@@ -43,4 +43,9 @@ def record():
 
 
 if __name__ == '__main__':
+
+    if config_utils.get_in_config('SERVER_IP') is None:
+        print("No server IP specified in config, looking trough the entire network... (might take a few seconds)")
+        server_utils.find_server_on_network()
+
     wake_word_listening()
