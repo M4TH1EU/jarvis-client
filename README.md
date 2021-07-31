@@ -13,12 +13,12 @@ of others languages like german, spanish and more.
 
 ## Compatiblity
 
-The client should work on any platforms from Windows to Linux on ARM devices (raspberry pi 3/4) or x86 computers.  
+The client should work on any platforms from Windows to Linux on ARM devices (raspberry pi 3/4) or x86 computers.
 
 The client handle TTS (Text to Speech) and Wake Word.  
-It listens for the wake word (offline of course) and
-then send what you said after the wake word to the server that will use Google Speech to Text API *(unfortunately no
-other API other than Google is good enough imo.)* to convert your speech to text and then try to execute your request.
+It listens for the wake word (offline of course) and then send what you said after the wake word to the server that will
+use Google Speech to Text API *(unfortunately no other API other than Google is good enough imo.)* to convert your
+speech to text and then try to execute your request.
 
 ## Installation
 
@@ -28,6 +28,7 @@ If not already installed, you will need Python 3.9, you can install it with thes
 sudo add-apt-repository ppa:deadsnakes/ppa
 sudo apt-get update
 sudo apt install python3.9 python3.9-dev python3.9-distutils
+sudo apt-get install -y python3-dev libasound2-dev # required even if python is already installed
 ```
 
 ### Install requirements
@@ -73,21 +74,6 @@ You will need to install gruut aswell, follow the instructions [here](https://gi
 # Errors
 
 Common errors than I personally encoured during this project, hope this can help you.
-
-## Error during installation of PyGObject:
-
-You're probably missing the development package. The package name varies by distribution, but it's the one
-containing `/usr/lib/pkgconfig/gobject-introspection-1.0.pc` (or `/usr/lib64/pkgconfig/gobject-introspection-1.0.pc` for
-some 64-bit distros):
-
-- Fedora, CentOS, RHEL, etc.: gobject-introspection-devel
-- Debian, Ubuntu, Mint, etc.: libgirepository1.0-dev
-- Arch: gobject-introspection
-- FreeBSD: gobject-introspection
-- Cygwin: libgirepository1.0-devel
-- msys2: mingw-w64-x86_64-gobject-introspection and/or mingw-w64-i686-gobject-introspection
-
-[Source](https://stackoverflow.com/a/18027346)
 
 ### Error during installation of PyAudio:
 
