@@ -2,3 +2,4 @@ pvporcupine~=1.9.5
 PyAudio~=0.2.11
 SpeechRecognition~=3.8.1
 requests~=2.26.0
+simpleaudio~=1.0.4

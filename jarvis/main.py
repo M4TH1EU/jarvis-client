@@ -1,7 +1,10 @@
+import os
 import struct
+import threading
 
 import pvporcupine
 import pyaudio
+import simpleaudio as sa
 import speech_recognition as sr
 
 from jarvis.utils import server_utils, config_utils
@@ -27,7 +30,8 @@ def wake_word_listening():
         keyword_index = wake_word_handler.process(pcm)
 
         if keyword_index >= 0:
-            print("Recognized")
+            threading.Thread(
+                target=sa.WaveObject.from_wave_file(os.getcwd() + "/sounds/" + "listening.wav").play).start()
             record()
 
 
@@ -35,10 +39,10 @@ def record():
     # obtain audio from the microphone
     r = sr.Recognizer()
     with sr.Microphone() as source:
-        print("Say something!")
-        r.adjust_for_ambient_noise(source=source, duration=0.5)
+        r.adjust_for_ambient_noise(source=source, duration=0.7)
         audio = r.listen(source, timeout=2, phrase_time_limit=5)
 
+    threading.Thread(target=sa.WaveObject.from_wave_file(os.getcwd() + "/sounds/" + "listened.wav").play).start()
     server_utils.send_record_to_server(audio.frame_data)
 
 
