@@ -35,11 +35,14 @@ def send_sentence_to_server(sentence):
     headers['Client-Port'] = str(config_utils.get_in_config('PORT'))
     # headers["Authorization"] = config_utils.get_in_config("API_KEY")
 
-    response = requests.post(url_service,
-                             headers=headers,
-                             json={'sentence': sentence})
+    try:
+        response = requests.post(url_service,
+                                 headers=headers,
+                                 json={'sentence': sentence})
 
-    print(bytes.decode(response.content))
+        print(bytes.decode(response.content))
+    except ConnectionError:
+        print("Error connecting to the server (server was probably shutdown during request)...")
 
 
 def get_server_port():
