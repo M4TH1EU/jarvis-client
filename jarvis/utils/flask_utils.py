@@ -10,8 +10,7 @@ app = Flask(__name__)
 
 @app.route("/play_raw_audio", methods=['POST'])
 def play_raw_audio():
-    data = get_data_in_request(request)
-    play_obj = sa.play_buffer(audio_data=data, num_channels=2, bytes_per_sample=2, sample_rate=44100)
+    play_obj = sa.play_buffer(audio_data=request.data, num_channels=1, bytes_per_sample=2, sample_rate=16000)
 
     play_obj.wait_done()
     return jsonify("OK")
