@@ -15,7 +15,7 @@ def send_record_to_server(raw_audio_data):
 
     headers = CaseInsensitiveDict()
     headers["Content-Type"] = "text/xml; charset=utf8"
-    headers['Client-Ip'] = socket.gethostname()
+    headers['Client-Ip'] = socket.gethostbyname(socket.gethostname())
     headers['Client-Port'] = str(config_utils.get_in_config('PORT'))
     # headers["Authorization"] = config_utils.get_in_config("API_KEY")
 
@@ -23,7 +23,7 @@ def send_record_to_server(raw_audio_data):
                              headers=headers,
                              data=raw_audio_data)
 
-    print(response.content)
+    print(bytes.decode(response.content))
 
 
 def get_server_port():
