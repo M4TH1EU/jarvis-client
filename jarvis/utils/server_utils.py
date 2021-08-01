@@ -62,7 +62,7 @@ def find_server_on_network():
         print("Warning: scanning for server on a huge network, please specify the server's ip in the config.json asap.")
         server_ip = find_device_on_network_with_opened_port(ipaddress.ip_network("10.0.0.0/8"),
                                                             config_utils.get_in_config('SERVER_PORT'))
-    else:
+    if server_ip is None:
         return None
 
     print("Found server on : " + str(server_ip))
