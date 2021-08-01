@@ -1,5 +1,6 @@
 import os
 import struct
+import sys
 import threading
 
 import pvporcupine
@@ -47,9 +48,8 @@ def record():
 
 
 if __name__ == '__main__':
-    if config_utils.get_in_config('SERVER_IP') is None:
-        print("No server IP specified in config, looking trough the entire network... (might take a few seconds)")
-        server_utils.find_server_on_network()
+    if server_utils.get_server_ip() is None:
+        sys.exit(1)
 
     thread = threading.Thread(target=wake_word_listening).start()
 
