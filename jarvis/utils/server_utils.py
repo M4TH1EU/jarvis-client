@@ -11,7 +11,6 @@ server_ip = None
 
 
 def send_record_to_server(frame_data):
-    # TODO: use config or even ping to find the server on local network ?
     url_service = "http://" + str(get_server_ip()) + ":" + str(get_server_port()) + "/process_audio_request"
 
     headers = CaseInsensitiveDict()
@@ -51,17 +50,20 @@ def get_server_ip():
 def find_server_on_network():
     global server_ip
 
-    # first try on the most common mask 192.168.1.0/24
-    server_ip = find_device_on_network_with_opened_port(ipaddress.ip_network("192.168.1.0/24"),
-                                                        config_utils.get_in_config('SERVER_PORT'))
-    if server_ip is None:
-        # then 172.16.0.0/12
+    ip = socket.gethostbyname(socket.gethostname())
+
+    if ip.startswith("192.168.1"):
+        server_ip = find_device_on_network_with_opened_port(ipaddress.ip_network("192.168.1.0/24"),
+                                                            config_utils.get_in_config('SERVER_PORT'))
+    elif ip.startswith("172.16"):
         server_ip = find_device_on_network_with_opened_port(ipaddress.ip_network("172.16.0.0/12"),
                                                             config_utils.get_in_config('SERVER_PORT'))
-        if server_ip is None:
-            # and last but not least the 10.0.0.0/8 (damn that's gonna be long to scan)
-            server_ip = find_device_on_network_with_opened_port(ipaddress.ip_network("10.0.0.0/8"),
-                                                                config_utils.get_in_config('SERVER_PORT'))
+    elif ip.startswith("10."):
+        print("Warning: scanning for server on a huge network, please specify the server's ip in the config.json asap.")
+        server_ip = find_device_on_network_with_opened_port(ipaddress.ip_network("10.0.0.0/8"),
+                                                            config_utils.get_in_config('SERVER_PORT'))
+    else:
+        return None
 
     print("Found server on : " + str(server_ip))
     server_ip = server_ip.compressed
