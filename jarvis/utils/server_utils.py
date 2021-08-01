@@ -10,7 +10,7 @@ from jarvis.utils import config_utils
 server_ip = None
 
 
-def send_record_to_server(frame_data):
+def send_record_to_server(raw_audio_data):
     url_service = "http://" + str(get_server_ip()) + ":" + str(get_server_port()) + "/process_audio_request"
 
     headers = CaseInsensitiveDict()
@@ -19,7 +19,7 @@ def send_record_to_server(frame_data):
 
     response = requests.post(url_service,
                              headers=headers,
-                             data=frame_data)
+                             data=raw_audio_data)
 
     print(response.content)
 
