@@ -2,13 +2,14 @@ import os
 import struct
 import sys
 import threading
+import time
 
 import pvporcupine
 import pyaudio
 import simpleaudio as sa
 import speech_recognition as sr
 
-from jarvis.utils import server_utils, config_utils, flask_utils
+from jarvis.utils import server_utils, flask_utils
 
 wake_word_handler = pvporcupine.create(keywords=['jarvis'])
 
@@ -47,10 +48,21 @@ def record():
     server_utils.send_record_to_server(audio.frame_data)
 
 
+def no_voice_input():
+    time.sleep(1)
+    while True:
+        sentence = input("Write something : ")
+        server_utils.send_sentence_to_server(sentence)
+
+
 if __name__ == '__main__':
     if server_utils.get_server_ip() is None:
         sys.exit(1)
 
-    thread = threading.Thread(target=wake_word_listening).start()
+    if '--no-voice' in sys.argv:
+        print("[WARN] No voice mode enabled")
+        thread = threading.Thread(target=no_voice_input).start()
+    else:
+        thread = threading.Thread(target=wake_word_listening).start()
 
     flask_utils.start_server()

@@ -26,6 +26,22 @@ def send_record_to_server(raw_audio_data):
     print(bytes.decode(response.content))
 
 
+def send_sentence_to_server(sentence):
+    url_service = "http://" + str(get_server_ip()) + ":" + str(get_server_port()) + "/process_text_request"
+
+    headers = CaseInsensitiveDict()
+    headers["Content-Type"] = "application/json; charset=utf8"
+    headers['Client-Ip'] = socket.gethostbyname(socket.gethostname())
+    headers['Client-Port'] = str(config_utils.get_in_config('PORT'))
+    # headers["Authorization"] = config_utils.get_in_config("API_KEY")
+
+    response = requests.post(url_service,
+                             headers=headers,
+                             json={'sentence': sentence})
+
+    print(bytes.decode(response.content))
+
+
 def get_server_port():
     return config_utils.get_in_config('SERVER_PORT') if not None else 5000
 
