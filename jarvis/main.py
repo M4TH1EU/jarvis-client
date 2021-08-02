@@ -11,7 +11,7 @@ import speech_recognition as sr
 
 from jarvis.utils import server_utils, flask_utils
 
-wake_word_handler = pvporcupine.create(keywords=['jarvis'])
+wake_word_handler = pvporcupine.create(keywords=['jarvis'], sensitivities=[0.65])
 
 
 def wake_word_listening():
