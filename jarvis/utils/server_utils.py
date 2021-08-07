@@ -86,7 +86,6 @@ def find_server_on_network():
     if server_ip is None:
         return None
 
-    print("Found server on : " + str(server_ip))
     server_ip = server_ip.compressed
     return server_ip
 
