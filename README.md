@@ -78,4 +78,5 @@ Common errors than I personally encoured during this project, hope this can help
 ### Error during installation of PyAudio:
 
 Do the following command `sudo apt-get install portaudio19-dev python-pyaudio`  
+*Note: if the package `python-pyaudio` is not found try `python3-pyaudio`*  
 [Source](https://ourcodeworld.com/articles/read/974/how-to-solve-installation-error-of-pyaudio-in-ubuntu-18-04-fatal-error-portaudio-h-file-not-found)
