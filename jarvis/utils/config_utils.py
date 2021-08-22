@@ -1,7 +1,7 @@
 import json
 import os
 
-path = os.getcwd()
+path = os.getcwd() + "/jarvis"
 
 
 def get_in_config(name):

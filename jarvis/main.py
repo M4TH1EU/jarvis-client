@@ -33,7 +33,7 @@ def wake_word_listening():
 
         if keyword_index >= 0:
             threading.Thread(
-                target=sa.WaveObject.from_wave_file(os.getcwd() + "/sounds/" + "listening.wav").play).start()
+                target=sa.WaveObject.from_wave_file(os.getcwd() + "/jarvis" + "/sounds/" + "listening.wav").play).start()
             record()
 
 
@@ -44,7 +44,7 @@ def record():
         r.adjust_for_ambient_noise(source=source, duration=0.7)
         audio = r.listen(source, timeout=2, phrase_time_limit=5)
 
-    threading.Thread(target=sa.WaveObject.from_wave_file(os.getcwd() + "/sounds/" + "listened.wav").play).start()
+    threading.Thread(target=sa.WaveObject.from_wave_file(os.getcwd() + "/jarvis" + "/sounds/" + "listened.wav").play).start()
     server_utils.send_record_to_server(audio.frame_data)
 
 
@@ -55,14 +55,14 @@ def no_voice_input():
         server_utils.send_sentence_to_server(sentence)
 
 
-if __name__ == '__main__':
+def start():
     if server_utils.get_server_ip() is None:
         sys.exit(1)
 
     if '--no-voice' in sys.argv:
         print("[WARN] No voice mode enabled")
-        thread = threading.Thread(target=no_voice_input).start()
+        threading.Thread(target=no_voice_input).start()
     else:
-        thread = threading.Thread(target=wake_word_listening).start()
+        threading.Thread(target=wake_word_listening).start()
 
     flask_utils.start_server()

@@ -73,6 +73,11 @@ def find_server_on_network():
 
     ip = socket.gethostbyname(socket.gethostname())
 
+    # sometimes it might return the local ip (127.0.0.1) adding local should solves that
+    # TODO: see if we only use the ".local" ip
+    if ip.startswith("127.0"):
+        ip = socket.gethostbyname(socket.gethostname() + ".local")
+
     if ip.startswith("192.168.1"):
         server_ip = find_device_on_network_with_opened_port(ipaddress.ip_network("192.168.1.0/24"),
                                                             config_utils.get_in_config('SERVER_PORT'))
