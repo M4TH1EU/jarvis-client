@@ -25,11 +25,13 @@ speech to text and then try to execute your request.
 If not already installed, you will need Python 3.9, you can install it with these commands.
 
 ```shell
-sudo add-apt-repository ppa:deadsnakes/ppa
+sudo add-apt-repository ppa:deadsnakes/ppa # optional
 sudo apt-get update
 sudo apt install python3.9 python3.9-dev python3.9-distutils
-sudo apt-get install -y python3-dev libasound2-dev # required even if python is already installed
+sudo apt-get install -y python3-dev python3-virtualenv libasound2-dev # required even if python is already installed
 ```
+
+Go into jarvis-client folder and run `virtualenv --python python3.9 venv` followed by `source venv/bin/activate`
 
 ### Install requirements
 
