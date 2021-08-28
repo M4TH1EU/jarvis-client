@@ -33,7 +33,8 @@ def wake_word_listening():
 
         if keyword_index >= 0:
             threading.Thread(
-                target=sa.WaveObject.from_wave_file(os.getcwd() + "/jarvis" + "/sounds/" + "listening.wav").play).start()
+                target=sa.WaveObject.from_wave_file(
+                    os.getcwd() + "/jarvis" + "/sounds/" + "listening.wav").play).start()
             record()
 
 
@@ -42,9 +43,14 @@ def record():
     r = sr.Recognizer()
     with sr.Microphone() as source:
         r.adjust_for_ambient_noise(source=source, duration=0.7)
-        audio = r.listen(source, timeout=2, phrase_time_limit=5)
 
-    threading.Thread(target=sa.WaveObject.from_wave_file(os.getcwd() + "/jarvis" + "/sounds/" + "listened.wav").play).start()
+        try:
+            audio = r.listen(source, timeout=2, phrase_time_limit=5)
+        except sr.WaitTimeoutError:
+            print("Sentence timeout")
+
+    threading.Thread(
+        target=sa.WaveObject.from_wave_file(os.getcwd() + "/jarvis" + "/sounds/" + "listened.wav").play).start()
     server_utils.send_record_to_server(audio.frame_data)
 
 
