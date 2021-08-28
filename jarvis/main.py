@@ -48,10 +48,14 @@ def record():
             audio = r.listen(source, timeout=2, phrase_time_limit=5)
         except sr.WaitTimeoutError:
             print("Sentence timeout")
+            return
 
     threading.Thread(
         target=sa.WaveObject.from_wave_file(os.getcwd() + "/jarvis" + "/sounds/" + "listened.wav").play).start()
-    server_utils.send_record_to_server(audio.frame_data)
+
+    if audio.frame_data:
+
+        server_utils.send_record_to_server(audio.frame_data)
 
 
 def no_voice_input():
