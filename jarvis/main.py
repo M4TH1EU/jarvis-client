@@ -45,6 +45,7 @@ def record():
         r.adjust_for_ambient_noise(source=source, duration=0.7)
 
         try:
+            print("Listening...")
             audio = r.listen(source, timeout=2, phrase_time_limit=5)
         except sr.WaitTimeoutError:
             print("Sentence timeout")
